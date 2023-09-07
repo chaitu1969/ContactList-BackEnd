@@ -1,0 +1,41 @@
+body{
+    margin: 0px;
+    font-family: sans-serif;
+}
+#title-header{
+    text-align: center;
+    color: grey;
+}
+
+.contact:hover{
+    background-color: lightgray;
+}
+.contact {
+    padding: 3px 10px;
+    border: 1px solid white;
+    background-color: lightblue;
+    box-shadow: 1px 1px 1px 1px lightgray;
+    color: green;
+    display: flex;
+}
+
+.contact .details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    width: 90%;
+}
+
+.contact .delete-button{
+    /* display: flex; */
+    /* justify-content:flex-end; */
+    width: 10%;
+    margin-top: 15px;
+    text-align: center;
+    /* background-color: red; */
+}
+
+#Form {
+    text-align: center;
+}
