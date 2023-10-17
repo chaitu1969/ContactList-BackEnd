@@ -1,50 +1,49 @@
 <html>
-    <head>
-        <title>
-            <%= title %>
-        </title>
-        
-        <style>
-            h1{
-                text-align: center;
-                color: cyan;
-            }
-           
-        </style>
+  <head>
+    <title><%= title %></title>
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="/css/home.css">
-    </head>
-    <body>
-        
-        <h1 id="title-header">
-            <i class ="fas fa-address-book"></i> Contact List</h1>
+    <style>
+      h1 {
+        text-align: center;
+        color: cyan;
+      }
+    </style>
 
-        <div id="Contact-List-container">
-            <ul>
-                <% for(let item of Contact_List ) { %>
-                    <li class="contact">
-                        
-                        <div class="details">
-                            <p><%= item.name %></p>
-                            <p><%= item.Age %></p>
-                        </div>
-                        <div class="delete-button">
-                            <a href="/delete-contact/?Name=<%= item.name %>">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </div>
-                    </li>
-                <% } %>
-            </ul>
-        </div>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
+    <h1 id="title-header"><i class="fas fa-address-book"></i> Contact List</h1>
 
-        <form action="/Updated_list" method="post" id="Form">
-            <input type="text" name="name" placeholder="Enter Name" required>
-            <input type="number" name="Age" placeholder="Enter Age" required>
-            <button type="submit">Submit</button>
-        </form>
+    <div id="Contact-List-container">
+      <ul>
+        <% for(let item of Contact_List ) { %>
+        <li class="contact">
+          <div class="details">
+            <p><%= item.name %></p>
+            <p><%= item.Age %></p>
+          </div>
+          <div class="delete-button">
+            <a href="/delete-contact/?Name=<%= item.name %>">
+              <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </li>
+        <% } %>
+      </ul>
+    </div>
 
-        <script type="text/javascript" src="/js/home.js"></script>
-    </body>
+    <form action="/Updated_list" method="post" id="Form">
+      <input type="text" name="name" placeholder="Enter Name" required />
+      <input type="number" name="Age" placeholder="Enter Age" required />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script type="text/javascript" src="/js/home.js"></script>
+  </body>
 </html>

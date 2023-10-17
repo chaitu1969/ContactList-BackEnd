@@ -1,103 +1,95 @@
-const express = require('express');
+const express = require("express");
 const port = 9000;
-const path = require('path');
+const path = require("path");
 
-const db = require('./config/mongoose');
-const Contact = require('./models/contact');
+const db = require("./config/mongoose");
+const Contact = require("./models/contact");
 // now below app var has app express functinalities
 const app = express();
 
 // setting template engine as ejs (viewEngine)
-app.set('view engine','ejs');
+app.set("view engine", "ejs");
 //combining path where the ejs files are placed
-app.set('views',path.join(__dirname,'views'));
+app.set("views", path.join(__dirname, "views"));
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('assets'));
+app.use(express.static("assets"));
 
 // Creating a var list and adding key values
 // called the below list in below get request
 var Contactlist = [
+  {
+    name: "Tony",
+    age: "50",
+  },
+  {
+    name: "Steve",
+    age: "80",
+  },
+  {
+    name: "Thor",
+    age: "1500",
+  },
+];
+
+app.get("/", function (req, res) {
+  // console.log(res);
+  // res.send('<h1>server is running</h1>');
+
+  // console.log(res);
+
+  return res.render("home", {
+    title: "My List",
+    // calledthe created contact list as key value
+    Contact_List: Contactlist,
+  });
+});
+
+app.post("/Create-contactlist", function (req, res) {
+  Contact.create(
     {
-        name:"Tony",
-        Age:"50"
+      name: req.body.Name,
+      age: req.body.Age,
     },
-    {
-        name:"Steve",
-        Age:"80"
-    },
-    {
-        name:"Thor",
-        Age:"1500"
+    function (err, newContact) {
+      if (err) {
+        console.log("errpr in creating contact ", err);
+        return;
+      }
+      console.log("********", newContact);
+      return res.redirect("/");
     }
-]
-
-app.get('/',function(req,res){
-    // console.log(res);
-    // res.send('<h1>server is running</h1>');
-
-    // console.log(res);
-
-    return res.render('home',{
-        title: "My List",
-        // calledthe created contact list as key value
-        Contact_List: Contactlist
-    });
-})
-
-app.post('/Updated_list',function(req,res){
-
-    // Contactlist.push({
-    //     name : req.body.name,
-    //     Age : req.body.Age
-    // });
-    // return res.redirect('/')
-
-    Contact.create({
-        name: req.body.Name,
-        Age : req.body.Age
-    }, function(err, newContact){
-        if(err){
-            console.log('error is generated while creating contact');
-            return ;
-        }
-        console.log("************", newContact);
-        return res.redirect('/');
-    });
-
+  );
 });
 
 //Rendering another Field Ejs file to JS
 
+app.get("/Field", function (req, res) {
+  return res.render("Field", {
+    title: "BattleField",
+  });
+});
 
-app.get('/Field', function(req,res){
-    return res.render('Field',{
-        title: "BattleField"
-    })
-})
+app.get("/delete-contact", function (req, res) {
+  console.log(req.query);
 
-app.get('/delete-contact',function(req,res){
+  let Name = req.query.Name;
 
-    console.log(req.query);
+  let contactIndex = Contactlist.findIndex((contact) => contact.name == Name);
 
-    let Name = req.query.Name;
+  if (contactIndex != -1) {
+    Contactlist.splice(contactIndex, 1);
+  }
 
-    let contactIndex = Contactlist.findIndex(contact => contact.name == Name);
-    
-    
-    if(contactIndex != -1){
-        Contactlist.splice(contactIndex,1);
-    }
+  return res.redirect("back");
+});
 
-    return res.redirect('back');
-})
-
-app.listen(port, function(err){
-    if(err){
-        console.log('got an error',err);
-        return 
-    }
-    console.log('server is up and running on ',port);
+app.listen(port, function (err) {
+  if (err) {
+    console.log("got an error", err);
     return;
-})
+  }
+  console.log("server is up and running on ", port);
+  return;
+});
